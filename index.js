@@ -8,7 +8,8 @@ const userRoute = require("./routes/user");
 const authRoute = require("./routes/auth");
 const productRoute = require("./routes/product");
 const cartRoute = require("./routes/cart");
-
+// const orderRoute = require("./routes/order");
+const stripeRoute = require("./routes/stripe");
 //* MONGOOSE DATABASE CONNECTION
 mongoose.set("strictQuery", true);
 mongoose
@@ -18,6 +19,10 @@ mongoose
     console.log(error);
   });
 
+const router = express.Router();
+router.get("/", (req, res) => {
+  res.send("hello");
+});
 //? ROUTERS LISTENING URL "PROTOCOL/HOSTNAME:5555/PATH?/SEARCH#HASH"
 
 app.use(cors());
@@ -26,9 +31,11 @@ app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
 app.use("/api/carts", cartRoute);
+// app.use("/api/orders", orderRoute);
+app.use("/api/checkout", stripeRoute);
 //? SERVER LISTEINING IN THE PORT
+// app.save("view engine", "pug");
 let PORT = process.env.PORT || 5005;
-
 app.listen(PORT, () => {
   console.log(`Backend server  is running at port ${PORT}!`);
 });
